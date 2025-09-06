@@ -60,8 +60,13 @@ nav img{
 #log-in-btn{
     background-color: black;
     color: white;
+
 }
 
+.logo{
+    height: 100px;
+    width: 90px;
+}
 #get-started-btn{
     color: black;
     background-color: white;
@@ -83,7 +88,7 @@ nav img{
 }
 
 #main h1 span{
-    background-color: #7e3836;
+    background-color: #af440a;
     font-family: 'Young Serif', serif;
     font-size: 28px;
     font-weight: 400;
