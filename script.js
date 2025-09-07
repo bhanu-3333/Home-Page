@@ -69,3 +69,31 @@ ScrollTrigger.create({
         });
     }
 });
+
+
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.utils.toArray(".shop-card").forEach((card, index) => {
+  gsap.fromTo(card,
+    {
+      opacity: 0,
+      y: 100,
+      scale: 0.8,
+      filter: "blur(10px)"
+    },
+    {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      filter: "blur(0px)",
+      duration: 0.8,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: card,
+        start: "top 85%",
+        end: "bottom 60%",
+        toggleActions: "restart none none reverse", // ✅ Animate out when leaving
+      }
+    }
+  );
+});
