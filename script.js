@@ -97,3 +97,31 @@ gsap.utils.toArray(".shop-card").forEach((card, index) => {
     }
   );
 });
+// ✅ Smooth Scroll for Nav Links
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        target.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+// ✅ GSAP Animation for Categories
+gsap.utils.toArray(".category-card").forEach((card, index) => {
+    gsap.fromTo(card,
+        { opacity: 0, y: 100, scale: 0.8 },
+        {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.8,
+            delay: index * 0.2,
+            ease: "power3.out",
+            scrollTrigger: {
+                trigger: ".categories-section",
+                start: "top 80%",
+                toggleActions: "restart none none reverse"
+            }
+        }
+    );
+});
