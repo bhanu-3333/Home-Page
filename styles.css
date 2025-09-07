@@ -21,6 +21,23 @@ nav {
     justify-content: space-between;
     align-items: center;
 }
+a {
+  color: white; /* Set white text */
+  text-decoration: none; /* Remove underline */
+}
+
+a:visited {
+  color: white; /* Keep white after visited */
+}
+
+a:hover {
+  color: #ff9800; /* Orange on hover */
+}
+
+a:active {
+  color: #ff9800; /* Orange when clicked */
+}
+
 
 nav img {
     height: 70px;
@@ -251,4 +268,89 @@ nav img {
 
 .shop-card p {
   color: #ccc;
+}
+
+/* Categories Section */
+.categories-section {
+    padding: 80px 20px;
+    background: #111;
+    text-align: center;
+}
+
+.categories-title {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+.categories-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Category Card */
+.category-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.category-card img {
+    width: 100%;
+    display: block;
+    transition: transform 0.6s ease;
+    border-radius: 15px;
+}
+
+.category-card .overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 165, 0, 0.3);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    border-radius: 15px;
+}
+
+.category-card h3 {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    font-size: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.5s ease, bottom 0.5s ease;
+}
+
+/* ✅ Unique Hover Effect */
+.category-card:hover img {
+    transform: scale(1.2) rotate(-3deg);
+    filter: brightness(1.2);
+}
+
+.category-card:hover .overlay {
+    opacity: 1;
+}
+
+.category-card:hover h3 {
+    opacity: 1;
+    bottom: 40px;
+}
+.category-card {
+  background: #222;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: background 0.4s ease;
+  cursor: pointer;
+}
+
+.category-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
 }
