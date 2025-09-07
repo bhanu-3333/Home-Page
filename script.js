@@ -52,3 +52,20 @@ timeline.to("#main h5",{
     repeat: -1,
     yoyo: true,
 })
+
+gsap.registerPlugin(ScrollTrigger);
+
+// Detect when user reaches the bottom section
+ScrollTrigger.create({
+    trigger: ".scrolling-text",
+    start: "top 90%", // when the section is about to come fully into view
+    once: true, // run only once
+    onEnter: () => {
+        gsap.to(".scrolling-content", {
+            x: "-50%",           // move left by 50%
+            duration: 15,        // 15 seconds for smooth scroll
+            repeat: -1,          // infinite loop
+            ease: "linear"
+        });
+    }
+});
