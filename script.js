@@ -272,6 +272,7 @@ gsap.utils.toArray(".info-item").forEach(item => {
     });
 });
 
+
 gsap.utils.toArray(".deals-btn, .submit-btn").forEach(btn => {
     btn.addEventListener('mouseenter', () => {
         gsap.to(btn, { y: -3, duration: 0.3, ease: "power2.out" });
