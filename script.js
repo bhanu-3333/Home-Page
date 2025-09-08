@@ -1,8 +1,6 @@
 // ===== GSAP Timeline Animations =====
 gsap.registerPlugin(ScrollTrigger);
-
 const timeline = gsap.timeline();
-
 timeline.from("nav img", {
     y: 50,
     duration: 1,
