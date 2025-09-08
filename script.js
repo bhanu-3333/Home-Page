@@ -161,6 +161,7 @@ window.addEventListener('load', handleScrollAnimation);
 
 // ===== Add Story Images Dynamically =====
 document.querySelectorAll('.story-visual').forEach((visual, index) => {
+    console.log('Checking story-visual element:', visual);
     if (!visual.querySelector('img')) {
         const img = document.createElement('img');
         img.src = `images/story${index + 1}.jpg`;
@@ -170,21 +171,31 @@ document.querySelectorAll('.story-visual').forEach((visual, index) => {
         img.style.height = '100%';
         img.style.objectFit = 'cover';
         visual.appendChild(img);
+        console.log('Appended image:', img.src);
+    } else {
+        console.log('Image already exists in:', visual);
     }
 });
 
-// ===== Optional GSAP Image Animations =====
-gsap.utils.toArray('.story-image').forEach((img, index) => {
-    gsap.from(img, {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        delay: index * 0.2,
-        scrollTrigger: {
-            trigger: img,
-            start: 'top 90%',
-            toggleActions: 'play none none reverse'
-        }
+// ===== Story Images Animation (Direct Style) =====
+document.addEventListener('DOMContentLoaded', () => {
+    const storyImages = document.querySelectorAll('.story-image');
+    console.log('Found story images:', storyImages.length);
+
+    storyImages.forEach((img, index) => {
+        console.log('Processing image:', index, img.src);
+
+        // Force initial state
+        img.style.opacity = '0';
+        img.style.transform = 'translateY(50px)';
+        img.style.transition = 'all 0.8s ease';
+
+        // Animate after a delay
+        setTimeout(() => {
+            console.log('Animating image:', index);
+            img.style.opacity = '1';
+            img.style.transform = 'translateY(0)';
+        }, 500 + (index * 300));
     });
 });
 
