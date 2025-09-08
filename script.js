@@ -151,12 +151,9 @@ const handleScrollAnimation = () => {
 
 window.addEventListener('scroll', handleScrollAnimation);
 window.addEventListener('load', handleScrollAnimation);
-
-// ===== Story Grid Images =====
-// Replace empty boxes with your images dynamically if needed
 document.querySelectorAll('.story-visual').forEach((visual, index) => {
     const img = document.createElement('img');
-    img.src = `images/story${index + 1}.jpg`; // make sure you have these images in your folder
+    img.src = `images/story${index + 1}.jpg`;
     img.alt = `Story Image ${index + 1}`;
     img.classList.add('story-image');
     img.style.width = '100%';
@@ -164,6 +161,7 @@ document.querySelectorAll('.story-visual').forEach((visual, index) => {
     img.style.objectFit = 'cover';
     visual.appendChild(img);
 });
+
 
 // ===== Optional GSAP Image Animations =====
 gsap.utils.toArray('.story-image').forEach((img, index) => {
