@@ -1,5 +1,7 @@
 // ===== GSAP Timeline Animations =====
-var timeline = gsap.timeline();
+gsap.registerPlugin(ScrollTrigger);
+
+const timeline = gsap.timeline();
 
 timeline.from("nav img", {
     y: 50,
@@ -54,9 +56,7 @@ timeline.to("#main h5", {
     yoyo: true,
 });
 
-// ===== GSAP ScrollTrigger for scrolling text =====
-gsap.registerPlugin(ScrollTrigger);
-
+// ===== Scrolling Text Animation =====
 ScrollTrigger.create({
     trigger: ".scrolling-text",
     start: "top 90%",
@@ -64,7 +64,7 @@ ScrollTrigger.create({
     onEnter: () => {
         gsap.to(".scrolling-content", {
             x: "-50%",
-            duration: 15,
+            duration: 20,
             repeat: -1,
             ease: "linear"
         });
@@ -102,7 +102,9 @@ document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
         const target = document.querySelector(link.getAttribute('href'));
-        target.scrollIntoView({ behavior: 'smooth' });
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+        }
     });
 });
 
@@ -128,7 +130,7 @@ gsap.utils.toArray(".category-card").forEach((card, index) => {
 
 // ===== Scroll Animation for Story, Values, Timeline, CTA Sections =====
 const scrollElements = document.querySelectorAll(
-    '.about-hero, .story-content, .story-visual, .story-image, .value-item, .timeline-title, .timeline-item, .cta-section'
+    '.about-hero, .story-content, .story-visual, .story-image, .value-item, .timeline-title, .timeline-item, .cta-section, .deals-header, .featured-deal, .quick-deal, .contact-header, .contact-info, .contact-form'
 );
 
 const elementInView = (el, offset = 0) => {
@@ -137,31 +139,41 @@ const elementInView = (el, offset = 0) => {
 };
 
 const displayScrollElement = (element) => element.classList.add('animate');
-const hideScrollElement = (element) => element.classList.remove('animate');
 
 const handleScrollAnimation = () => {
     scrollElements.forEach((el) => {
         if (elementInView(el, 100)) {
             displayScrollElement(el);
-        } else {
-            hideScrollElement(el);
+        }
+    });
+
+    // Animate quick deals with stagger
+    const quickDeals = document.querySelectorAll('.quick-deal');
+    quickDeals.forEach((deal, index) => {
+        if (elementInView(deal, 150)) {
+            setTimeout(() => {
+                deal.classList.add('animate');
+            }, index * 200);
         }
     });
 };
 
 window.addEventListener('scroll', handleScrollAnimation);
 window.addEventListener('load', handleScrollAnimation);
-document.querySelectorAll('.story-visual').forEach((visual, index) => {
-    const img = document.createElement('img');
-    img.src = `images/story${index + 1}.jpg`;
-    img.alt = `Story Image ${index + 1}`;
-    img.classList.add('story-image');
-    img.style.width = '100%';
-    img.style.height = '100%';
-    img.style.objectFit = 'cover';
-    visual.appendChild(img);
-});
 
+// ===== Add Story Images Dynamically =====
+document.querySelectorAll('.story-visual').forEach((visual, index) => {
+    if (!visual.querySelector('img')) {
+        const img = document.createElement('img');
+        img.src = `images/story${index + 1}.jpg`;
+        img.alt = `Story Image ${index + 1}`;
+        img.classList.add('story-image');
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'cover';
+        visual.appendChild(img);
+    }
+});
 
 // ===== Optional GSAP Image Animations =====
 gsap.utils.toArray('.story-image').forEach((img, index) => {
@@ -177,3 +189,96 @@ gsap.utils.toArray('.story-image').forEach((img, index) => {
         }
     });
 });
+
+// ===== Countdown Timer =====
+function startCountdown() {
+    const timer = setInterval(() => {
+        const daysElem = document.getElementById('days');
+        const hoursElem = document.getElementById('hours');
+        const minutesElem = document.getElementById('minutes');
+        const secondsElem = document.getElementById('seconds');
+
+        if (!daysElem || !hoursElem || !minutesElem || !secondsElem) {
+            clearInterval(timer);
+            return;
+        }
+
+        let days = parseInt(daysElem.textContent);
+        let hours = parseInt(hoursElem.textContent);
+        let minutes = parseInt(minutesElem.textContent);
+        let seconds = parseInt(secondsElem.textContent);
+
+        seconds--;
+        if (seconds < 0) {
+            seconds = 59;
+            minutes--;
+            if (minutes < 0) {
+                minutes = 59;
+                hours--;
+                if (hours < 0) {
+                    hours = 23;
+                    days--;
+                }
+            }
+        }
+
+        daysElem.textContent = days.toString().padStart(2, '0');
+        hoursElem.textContent = hours.toString().padStart(2, '0');
+        minutesElem.textContent = minutes.toString().padStart(2, '0');
+        secondsElem.textContent = seconds.toString().padStart(2, '0');
+    }, 1000);
+}
+
+window.addEventListener('load', startCountdown);
+
+// ===== Form Submission Handling =====
+const contactForm = document.getElementById('contactForm');
+if (contactForm) {
+    contactForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const submitBtn = document.querySelector('.submit-btn span');
+        if (!submitBtn) return;
+
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Sending...';
+
+        setTimeout(() => {
+            submitBtn.innerHTML = 'Message Sent!';
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                contactForm.reset();
+            }, 2000);
+        }, 1500);
+    });
+}
+
+// ===== Hover Effects with GSAP =====
+gsap.utils.toArray(".info-item").forEach(item => {
+    item.addEventListener('mouseenter', () => {
+        gsap.to(item, { x: 15, duration: 0.3, ease: "power2.out" });
+    });
+    item.addEventListener('mouseleave', () => {
+        gsap.to(item, { x: 10, duration: 0.3, ease: "power2.out" });
+    });
+});
+
+gsap.utils.toArray(".deals-btn, .submit-btn").forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+        gsap.to(btn, { y: -3, duration: 0.3, ease: "power2.out" });
+    });
+    btn.addEventListener('mouseleave', () => {
+        gsap.to(btn, { y: 0, duration: 0.3, ease: "power2.out" });
+    });
+});
+
+// Featured deal hover effect
+const featuredDeal = document.querySelector('.featured-deal');
+if (featuredDeal) {
+    featuredDeal.addEventListener('mouseenter', function () {
+        gsap.to(this, { y: -8, duration: 0.4, ease: "power2.out" });
+    });
+    featuredDeal.addEventListener('mouseleave', function () {
+        gsap.to(this, { y: 0, duration: 0.4, ease: "power2.out" });
+    });
+}
