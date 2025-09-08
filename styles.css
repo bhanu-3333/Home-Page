@@ -1185,7 +1185,6 @@ nav img {
             transition: left 0.4s ease;
             z-index: 0;
         }
-
         .deals-btn:hover::before {
             left: 0;
         }
