@@ -260,6 +260,7 @@ if (contactForm) {
             }, 2000);
         }, 1500);
     });
+    
 }
 
 // ===== Hover Effects with GSAP =====
